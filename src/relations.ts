@@ -1,3 +1,4 @@
+// export namespace relations {
 type BinRelationFn<T> = (a: T, b: T) => boolean;
 type CurryRelationFn<T> = (b: T) => (a: T) => boolean;
 
@@ -91,3 +92,4 @@ export const inSegmentc = (a: Comparable, b: Comparable) => (
 ): boolean => leqc(x)(a) && leqc(b)(x);
 
 /** Relational array operators */
+// }

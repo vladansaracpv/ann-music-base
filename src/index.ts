@@ -1,25 +1,27 @@
-import * as Arrays from "./arrays";
-import * as Boolean from "./boolean";
-import * as CharCode from "./charCode";
-import * as Error from "./error";
-import * as Functional from "./functional";
-import * as Logger from "./logger";
-import * as Logical from "./logical";
-import * as Math from "./math";
-import * as Range from "./range";
-import * as Relations from "./relations";
-import * as Strings from "./strings";
-import * as TypeCheck from "./typings";
+import * as ArraysBase from "./arrays";
+import * as BooleanBase from "./boolean";
+import * as CharCodeBase from "./charCode";
+import * as ErrorBase from "./error";
+import * as FunctionalBase from "./functional";
+import * as LoggerBase from "./logger";
+import * as LogicalBase from "./logical";
+import * as MathBase from "./math";
+import * as RangeBase from "./range";
+import * as RelationsBase from "./relations";
+import * as StringsBase from "./strings";
+import * as TypeCheckBase from "./typings";
 
-export { Arrays };
-export { Boolean };
-export { CharCode };
-export { Error };
-export { Functional };
-export { Logger };
-export { Logical };
-export { Math };
-export { Range };
-export { Relations };
-export { Strings };
-export { TypeCheck };
+export {
+  ArraysBase,
+  BooleanBase,
+  CharCodeBase,
+  ErrorBase,
+  FunctionalBase,
+  LoggerBase,
+  LogicalBase,
+  MathBase,
+  RangeBase,
+  RelationsBase,
+  StringsBase,
+  TypeCheckBase
+};
