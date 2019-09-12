@@ -7,18 +7,12 @@ type ComparableCurryFn = CurryRelationFn<Comparable>;
 
 /** Relational binary operators  */
 
-// lt := (a,b) => a < b
-
 /**
- * Tokenize a chord name. It returns an array with the tonic and chord type
- * If not tonic is found, all the name is considered the chord name.
- *
- * This function does NOT check if the chord type exists or not. It only tries
- * to split the tonic and chord type.
+ * Relation less than
  *
  * @function
- * @param {Comparable} a - the chord name
- * @param {Comparable} b - the chord name
+ * @param {Comparable} a
+ * @param {Comparable} b
  * @return {boolean} smaller of (a, b)
  * @example
  * lt(2, 3) // => true
