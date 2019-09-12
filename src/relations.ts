@@ -1,6 +1,29 @@
+type BinRelationFn<T> = (a: T, b: T) => boolean;
+type CurryRelationFn<T> = (b: T) => (a: T) => boolean;
+
+type Comparable = number | string;
+type ComparableBinFn = BinRelationFn<Comparable>;
+type ComparableCurryFn = CurryRelationFn<Comparable>;
+
 /** Relational binary operators  */
 
 // lt := (a,b) => a < b
+
+/**
+ * Tokenize a chord name. It returns an array with the tonic and chord type
+ * If not tonic is found, all the name is considered the chord name.
+ *
+ * This function does NOT check if the chord type exists or not. It only tries
+ * to split the tonic and chord type.
+ *
+ * @function
+ * @param {Comparable} a - the chord name
+ * @param {Comparable} b - the chord name
+ * @return {boolean} smaller of (a, b)
+ * @example
+ * lt(2, 3) // => true
+ * lt(3, 3) // => false
+ */
 export const lt: ComparableBinFn = (a, b) => a < b;
 
 // leq := (a,b) => a <= b
@@ -24,10 +47,18 @@ export const cmp = (a: Comparable, b: Comparable): number => {
 };
 
 // interval := (a,b,n) => a < n < b
-export const inInterval = (lower: number, higher: number, num: number): boolean => lt(lower, num) && lt(num, higher);
+export const inInterval = (
+  lower: number,
+  higher: number,
+  num: number
+): boolean => lt(lower, num) && lt(num, higher);
 
 // segment := (a,b,n) => a <= n <= b
-export const inSegment = (lower: number, higher: number, num: number): boolean => leq(lower, num) && leq(num, higher);
+export const inSegment = (
+  lower: number,
+  higher: number,
+  num: number
+): boolean => leq(lower, num) && leq(num, higher);
 
 export const isNegative = (a: number): boolean => lt(a, 0);
 
@@ -56,9 +87,13 @@ export const gtc: ComparableCurryFn = b => a => a > b;
 export const geqc: ComparableCurryFn = b => a => a >= b;
 
 // intervalc := (a,b) => x => a < x < b
-export const inIntervalc = (a: Comparable, b: Comparable) => (x: Comparable): boolean => ltc(x)(a) && ltc(b)(x);
+export const inIntervalc = (a: Comparable, b: Comparable) => (
+  x: Comparable
+): boolean => ltc(x)(a) && ltc(b)(x);
 
 // segmentc := (a,b) => x => a <= x <= b
-export const inSegmentc = (a: Comparable, b: Comparable) => (x: Comparable): boolean => leqc(x)(a) && leqc(b)(x);
+export const inSegmentc = (a: Comparable, b: Comparable) => (
+  x: Comparable
+): boolean => leqc(x)(a) && leqc(b)(x);
 
 /** Relational array operators */

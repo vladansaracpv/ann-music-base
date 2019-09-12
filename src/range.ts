@@ -1,3 +1,12 @@
+interface RangeType {
+  start: number;
+  end: number;
+}
+
+interface RangedGroup {
+  range: RangeType;
+  size: number;
+}
 /**
  * Returns the intersection between two ranges as a range itself.
  * Returns `{ start: 0, end: 0 }` if the intersection is empty.
@@ -25,7 +34,10 @@ export function intersects(one: RangeType, other: RangeType): boolean {
   return !isEmpty(intersect(one, other));
 }
 
-export function relativeComplement(one: RangeType, other: RangeType): RangeType[] {
+export function relativeComplement(
+  one: RangeType,
+  other: RangeType
+): RangeType[] {
   const result: RangeType[] = [];
   const first = { start: one.start, end: Math.min(other.start, one.end) };
   const second = { start: Math.max(other.end, one.start), end: one.end };

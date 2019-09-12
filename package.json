@@ -1,9 +1,9 @@
 {
   "name": "ann-music-base",
-  "version": "1.0.0",
-  "description": "A nice greeter",
+  "version": "1.0.2",
+  "description": "Base methods for @ann-music-js project",
   "main": "lib/index.js",
-  "types": "lib/types.d.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
@@ -11,7 +11,7 @@
     "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "version": "git add -A src",
+    "version": "git add -A",
     "postversion": "git push && git push --tags"
   },
   "repository": {
