@@ -1,24 +1,38 @@
 {
   "name": "ann-music-base",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A nice greeter",
+  "main": "lib/index.js",
+  "types": "lib/types.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
+    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "version": "git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vladansaracpv/ann-music-base.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Music",
+    "Library",
+    "Typescript"
+  ],
+  "author": "KB13",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/vladansaracpv/ann-music-base/issues"
   },
   "homepage": "https://github.com/vladansaracpv/ann-music-base#readme",
   "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.6.3"
   }
 }
