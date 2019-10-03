@@ -52,7 +52,7 @@ export type LogOutput = (
 ) => void;
 
 export class Logger {
-  source: string;
+  source?: string;
   /**
    * Current logging level.
    * Set it to LogLevel.Off to disable logs completely.
@@ -73,7 +73,7 @@ export class Logger {
   }
 
   constructor(source?: string) {
-    this.source = source || "";
+    this.source = source;
   }
 
   /**

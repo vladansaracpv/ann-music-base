@@ -1,100 +1,48 @@
-// /** Array methods */
-import { eq, neq, lt } from "./relations";
-import { add2, sub2, abs } from "./math";
-import { either } from "./boolean";
-import { isInteger, isUndefinedOrNull } from "./typings";
-import { or2 } from "./logical";
+import { curry } from "./functional";
+/**
+ * Arithmetic operations
+ *
+ * {op}2 := binary
+ * {op}c := curried
+ * {op}N := n-ary)
+ */
 
-const id = (n: any) => n;
-const name = id;
-const notNull = (n: any) => !isUndefinedOrNull(n);
-const uniqueLocal = (n: any, i: number, a: any[]) => eq(i, 0) || neq(n, a[--i]);
+/** Addition */
+export const add = (a: number, b: number): number => a + b;
+export const addN = (...args: number[]): number => args.reduce(add);
+export const addC = curry(add);
+export const inc = (n: number): number => n + 1;
 
-export const fillStr = (s: string, n: number) => Array(Math.abs(n) + 1).join(s);
+/** Subtraction */
+export const sub = (a: number, b: number): number => a - b;
+export const subN = (...args: number[]): number => args.reduce(sub);
+export const subC = curry(sub);
+export const dec = (n: number): number => n - 1;
 
-export const split = (condition: string) => (str: string): string[] =>
-  str.split(condition);
-export const splitC = (condition: string) => (array: string[]): string[][] =>
-  array.map(split(condition));
+/** Division */
+export const div = (a: number, b: number): number => a / b;
+export const divN = (...args: number[]): number => args.reduce(div);
+export const divC = curry(div);
 
-export const join = (condition: string) => (array: any[]): string =>
-  array.join(condition);
-export const joinC = (condition: string) => (array: any[]): string[] =>
-  array.map(join(condition));
+/** Multiplication */
+export const mul = (a: number, b: number): number => a * b;
+export const mulN = (...args: number[]): number => args.reduce(mul);
+export const mulC = curry(mul);
 
-export const concat = (a: any[], b: any[]): any[] => [...a, ...b];
-export const concatN = (...args: any[]): any[] => args.reduce(concat);
+/** Math functions */
+export const mod = (n: number, a: number): number => a % n;
+export const modC = curry(mod);
 
-export const flatten = (array: any, depth = 2) => array.flat(depth);
+export const floor = (n: number): number => Math.floor(n);
+export const ceil = (n: number): number => Math.ceil(n);
+export const abs = (n: number): number => Math.abs(n);
+export const pow = (n: number) => (a: number): number => Math.pow(a, n);
+export const pow2 = (n: number): number => 2 ** n;
+export const sign = (n: number): number => (n < 0 ? -1 : 1);
 
-export const compact = (array: any[]) => array.filter(notNull);
+export const random = (n: number): number =>
+  Math.floor(Math.random() * Math.floor(n));
 
-export const toBinary = (n: number) => n.toString(2);
-
-export const sort = (src: any[], fn = id) =>
-  compact(src.map(name)).sort((a, b) => fn(a) - fn(b));
-
-export const unique = (array: any[]) => sort(array).filter(uniqueLocal);
-
-export const rangeUp = (start: number, l: number): number[] => {
-  return Array(l)
-    .fill(start)
-    .map(add2);
-};
-
-export const rangeDown = (start: number, l: number): number[] => {
-  return Array(l)
-    .fill(start)
-    .map(sub2);
-};
-
-export const swap = (arr: any[], a: number, b: number) =>
-  ([arr[a], arr[b]] = [arr[b], arr[a]]);
-
-export const range = (a: number, b: number): number[] => {
-  if (or2(!isInteger(a), !isInteger(b))) return [];
-
-  return either(
-    rangeUp(a, abs(b - a + 1)),
-    rangeDown(a, abs(a - b + 1)),
-    lt(a, b)
-  );
-};
-
-export const shuffle = (array: any, rnd = Math.random) => {
-  let [i, n] = [0, array.length];
-
-  while (n) {
-    i = (rnd() * n--) | 0;
-    swap(array, n, i);
-  }
-
-  return array;
-};
-
-export const permutations = (array: any[]): any => {
-  if (array.length === 0) return [[]];
-  return permutations(array.slice(1)).reduce((acc: any, perm: any) => {
-    return acc.concat(
-      array.map((e, pos) => {
-        const newPerm = [...perm];
-        newPerm.splice(pos, 0, array[0]);
-        return newPerm;
-      })
-    );
-  }, []);
-};
-
-export const rotate = (n: number, array: any[]): any[] => {
-  const { length } = array;
-  const i = n % length;
-  return concat(array.slice(i, length), array.slice(0, i));
-};
-
-export const mapN = (fn: any, array: any[], n: number): any => {
-  return either(array, mapN(fn, array.map(fn), n - 1), eq(0, n));
-};
-
-export const callN = (fn: any, array: any[], n: number): any => {
-  return either(array, callN(fn, array.map(fn), n - 1), eq(0, n));
-};
+/** Sums */
+export const gsum = (a1: number, r: number, n: number): number =>
+  2 * a1 * (1 - r ** n);

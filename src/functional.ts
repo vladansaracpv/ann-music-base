@@ -1,14 +1,14 @@
 /** Functional Programming */
 
-export const partial = (fn: any, ...first: any) => (...rest: any) =>
-  fn(...first, ...rest);
-
 export const curry = (fn: any) =>
   (function curried(this: any, cargs: any) {
     return cargs.length >= fn.length
       ? fn.apply(this, cargs)
       : (...args: any) => curried([...cargs, ...args]);
   })([]);
+
+export const partial = (fn: any, ...first: any) => (...rest: any) =>
+  fn(...first, ...rest);
 
 export const compose2 = (f: any, g: any) => (...args: any) => f(g(...args));
 export const compose = (...fns: any) => fns.reduce(compose2);

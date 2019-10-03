@@ -1,27 +1,27 @@
-import * as ArraysBase from "./arrays";
-import * as BooleanBase from "./boolean";
-import * as CharCodeBase from "./charCode";
-import * as ErrorBase from "./error";
-import * as FunctionalBase from "./functional";
-import * as LoggerBase from "./logger";
-import * as LogicalBase from "./logical";
-import * as MathBase from "./math";
-import * as RangeBase from "./range";
-import * as RelationsBase from "./relations";
-import * as StringsBase from "./strings";
-import * as TypeCheckBase from "./typings";
+import * as Arrays from "./arrays";
+import * as Boolean from "./boolean";
+import * as CharCodes from "./charCode";
+import * as Errors from "./error";
+import * as Functional from "./functional";
+import * as Logger from "./logger";
+import * as Logical from "./logical";
+import * as Maths from "./math";
+import * as Range from "./range";
+import * as Relations from "./relations";
+import * as Strings from "./strings";
+import * as Typings from "./typings";
 
-export {
-  ArraysBase,
-  BooleanBase,
-  CharCodeBase,
-  ErrorBase,
-  FunctionalBase,
-  LoggerBase,
-  LogicalBase,
-  MathBase,
-  RangeBase,
-  RelationsBase,
-  StringsBase,
-  TypeCheckBase
+export const Base = {
+  Array,
+  Boolean,
+  CharCodes,
+  Errors,
+  Functional,
+  Logger,
+  Logical,
+  Maths,
+  Range,
+  Relations,
+  Strings,
+  Typings
 };
