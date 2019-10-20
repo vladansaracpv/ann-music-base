@@ -11,7 +11,7 @@
     "test": "jest --config jestconfig.json",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "echo \"Error: no lint specified\" && exit 1",
+    "lint": "echo \"Error: no lint specified\"",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "echo ",

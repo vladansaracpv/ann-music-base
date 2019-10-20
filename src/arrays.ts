@@ -1,12 +1,12 @@
-import { either } from './boolean';
-import { or } from './logical';
-import { abs, add, sub } from './math';
 // /** Array methods */
-import { eq, lt, neq } from './relations';
+import { eq, neq, lt } from './relations';
+import { add, sub, abs } from './math';
+import { either } from './boolean';
 import { isInteger, isUndefinedOrNull } from './typings';
+import { or } from './logical';
 
-const id = (n: any) => n;
-const notNull = (n: any) => !isUndefinedOrNull(n);
+const id = n => n;
+const notNull = n => !isUndefinedOrNull(n);
 const uniqueLocal = (n: any, i: number, a: any[]) => eq(i, 0) || neq(n, a[--i]);
 
 export const fillStr = (s: string, n: number) => Array(Math.abs(n) + 1).join(s);
@@ -19,6 +19,8 @@ export const joinC = (condition: string) => (array: any[]): string[] => array.ma
 
 export const concat = (a: any[], b: any[]): any[] => [...a, ...b];
 export const concatN = (...args: any[]): any[] => args.reduce(concat);
+
+export const flatten = (array, depth = 2) => array.flat(depth);
 
 export const compact = (array: any[]) => array.filter(notNull);
 
@@ -42,18 +44,15 @@ export const rangeDown = (start: number, l: number): number[] => {
 export const swap = (arr: any[], a: number, b: number) => ([arr[a], arr[b]] = [arr[b], arr[a]]);
 
 export const range = (a: number, b: number): number[] => {
-  if (or(!isInteger(a), !isInteger(b))) {
-    return [];
-  }
+  if (or(!isInteger(a), !isInteger(b))) return [];
 
   return either(rangeUp(a, abs(b - a + 1)), rangeDown(a, abs(a - b + 1)), lt(a, b));
 };
 
-export const shuffle = (array: any[], rnd = Math.random) => {
+export const shuffle = (array, rnd = Math.random) => {
   let [i, n] = [0, array.length];
 
   while (n) {
-    // tslint:disable-next-line: no-bitwise
     i = (rnd() * n--) | 0;
     swap(array, n, i);
   }
@@ -61,11 +60,9 @@ export const shuffle = (array: any[], rnd = Math.random) => {
   return array;
 };
 
-export const permutations = (array: any[]): any[] => {
-  if (array.length === 0) {
-    return [[]];
-  }
-  return permutations(array.slice(1)).reduce((acc: any[], perm: any) => {
+export const permutations = array => {
+  if (array.length === 0) return [[]];
+  return permutations(array.slice(1)).reduce((acc, perm) => {
     return acc.concat(
       array.map((e, pos) => {
         const newPerm = [...perm];
@@ -82,9 +79,10 @@ export const rotate = (n: number, array: any[]): any[] => {
   return concat(array.slice(i, length), array.slice(0, i));
 };
 
-export const mapN = (fn: any, array: any[], n: number): any => {
+export const mapN = (fn: any, array: any[], n: number) => {
   return either(array, mapN(fn, array.map(fn), n - 1), eq(0, n));
 };
 
-export const callN = (fn: any, array: any[], n: number): any =>
-  either(array, callN(fn, array.map(fn), n - 1), eq(0, n));
+export const callN = (fn: any, array: any[], n: number) => {
+  return either(array, callN(fn, array.map(fn), n - 1), eq(0, n));
+};
