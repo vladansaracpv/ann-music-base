@@ -34,10 +34,7 @@ export function intersects(one: RangeType, other: RangeType): boolean {
   return !isEmpty(intersect(one, other));
 }
 
-export function relativeComplement(
-  one: RangeType,
-  other: RangeType
-): RangeType[] {
+export function relativeComplement(one: RangeType, other: RangeType): RangeType[] {
   const result: RangeType[] = [];
   const first = { start: one.start, end: Math.min(other.start, one.end) };
   const second = { start: Math.max(other.end, one.start), end: one.end };

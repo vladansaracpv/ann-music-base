@@ -1,4 +1,4 @@
-import { curry } from "./functional";
+import { curry } from './functional';
 
 /** Logical operators (binary, N-ary) */
 

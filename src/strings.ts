@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { CharCode } from "./charCode";
+import { CharCode } from './charCode';
 
 /** String methods */
 
 export const rest = (x: string, n = 1) => x.substring(n);
 
-export const glue = (...args: any) =>
-  args.reduce((acc: any, el: any) => acc + el);
+export const glue = (...args) => args.reduce((acc, el) => acc + el);
 
 export const len = (str: string) => str.length;
 
@@ -14,43 +13,35 @@ export const len = (str: string) => str.length;
  * Function for tokenizing parsed string
  * @param str {string} - string to parse against
  * @param regex {RegExp}
- * @returns {<string>[]} || null
+ * @return {<string>[]} || null
  */
-export const tokenize = (str: string, regex: string | RegExp) => {
-  if (str.match(regex)) {
-    const matched = str.match(regex) || { groups: [] };
-    return matched["groups"];
-  } else {
-    return [];
-  }
-};
+export const tokenize = (str: string, regex: string | RegExp) => (str.match(regex) ? str.match(regex)['groups'] : null);
 
 export const capitalize = (l: string) => l[0].toUpperCase(); // l.charAt(0).toUpperCase() + l.slice(1);
 
-export const substitute = (str: string, regex: RegExp, char: string) =>
-  str.replace(regex, char);
+export const substitute = (str: string, regex: RegExp, char: string) => str.replace(regex, char);
 
-export const empty = "";
+export const empty = '';
 
 export function isFalsyOrWhitespace(str: string | undefined): boolean {
-  if (!str || typeof str !== "string") {
+  if (!str || typeof str !== 'string') {
     return true;
   }
   return str.trim().length === 0;
 }
 
 /**
- * @returns the provided number with the given number of preceding zeros.
+ * @return the provided number with the given number of preceding zeros.
  */
-export function pad(n: number, l: number, char: string = "0"): string {
-  const str = "" + n;
+export function pad(n: number, l: number, char: string = '0'): string {
+  const str = '' + n;
   const r = [str];
 
   for (let i = str.length; i < l; i++) {
     r.push(char);
   }
 
-  return r.reverse().join("");
+  return r.reverse().join('');
 }
 
 const _formatRegexp = /{(\d+)}/g;
@@ -78,12 +69,12 @@ export function format(value: string, ...args: any[]): string {
 export function escape(html: string): string {
   return html.replace(/[<>&]/g, function(match) {
     switch (match) {
-      case "<":
-        return "&lt;";
-      case ">":
-        return "&gt;";
-      case "&":
-        return "&amp;";
+      case '<':
+        return '&lt;';
+      case '>':
+        return '&gt;';
+      case '&':
+        return '&amp;';
       default:
         return match;
     }
@@ -94,7 +85,7 @@ export function escape(html: string): string {
  * Escapes regular expression characters in a given string
  */
 export function escapeRegExpCharacters(value: string): string {
-  return value.replace(/[\-\\\{\}\*\+\?\|\^\$\.\[\]\(\)\#]/g, "\\$&");
+  return value.replace(/[\-\\\{\}\*\+\?\|\^\$\.\[\]\(\)\#]/g, '\\$&');
 }
 
 /**
@@ -102,7 +93,7 @@ export function escapeRegExpCharacters(value: string): string {
  * @param haystack string to trim
  * @param needle the thing to trim (default is a blank)
  */
-export function trim(haystack: string, needle: string = " "): string {
+export function trim(haystack: string, needle: string = ' '): string {
   const trimmed = ltrim(haystack, needle);
   return rtrim(trimmed, needle);
 }
@@ -156,7 +147,7 @@ export function rtrim(haystack: string, needle: string): string {
       break;
     }
     if (idx === 0) {
-      return "";
+      return '';
     }
     offset = idx;
   }
@@ -165,13 +156,11 @@ export function rtrim(haystack: string, needle: string): string {
 }
 
 export function convertSimple2RegExpPattern(pattern: string): string {
-  return pattern
-    .replace(/[\-\\\{\}\+\?\|\^\$\.\,\[\]\(\)\#\s]/g, "\\$&")
-    .replace(/[\*]/g, ".*");
+  return pattern.replace(/[\-\\\{\}\+\?\|\^\$\.\,\[\]\(\)\#\s]/g, '\\$&').replace(/[\*]/g, '.*');
 }
 
 export function stripWildcards(pattern: string): string {
-  return pattern.replace(/\*/g, "");
+  return pattern.replace(/\*/g, '');
 }
 
 /**
@@ -217,37 +206,33 @@ export interface RegExpOptions {
   unicode?: boolean;
 }
 
-export function createRegExp(
-  searchString: string,
-  isRegex: boolean,
-  options: RegExpOptions = {}
-): RegExp {
+export function createRegExp(searchString: string, isRegex: boolean, options: RegExpOptions = {}): RegExp {
   if (!searchString) {
-    throw new Error("Cannot create regex from empty string");
+    throw new Error('Cannot create regex from empty string');
   }
   if (!isRegex) {
     searchString = escapeRegExpCharacters(searchString);
   }
   if (options.wholeWord) {
     if (!/\B/.test(searchString.charAt(0))) {
-      searchString = "\\b" + searchString;
+      searchString = '\\b' + searchString;
     }
     if (!/\B/.test(searchString.charAt(searchString.length - 1))) {
-      searchString = searchString + "\\b";
+      searchString = searchString + '\\b';
     }
   }
-  let modifiers = "";
+  let modifiers = '';
   if (options.global) {
-    modifiers += "g";
+    modifiers += 'g';
   }
   if (!options.matchCase) {
-    modifiers += "i";
+    modifiers += 'i';
   }
   if (options.multiline) {
-    modifiers += "m";
+    modifiers += 'm';
   }
   if (options.unicode) {
-    modifiers += "u";
+    modifiers += 'u';
   }
 
   return new RegExp(searchString, modifiers);
@@ -256,18 +241,13 @@ export function createRegExp(
 export function regExpLeadsToEndlessLoop(regexp: RegExp): boolean {
   // Exit early if it's one of these special cases which are meant to match
   // against an empty string
-  if (
-    regexp.source === "^" ||
-    regexp.source === "^$" ||
-    regexp.source === "$" ||
-    regexp.source === "^\\s*$"
-  ) {
+  if (regexp.source === '^' || regexp.source === '^$' || regexp.source === '$' || regexp.source === '^\\s*$') {
     return false;
   }
 
   // We check against an empty string. If the regular expression doesn't advance
   // (e.g. ends in an endless loop) it will match an empty string.
-  const match = regexp.exec("");
+  const match = regexp.exec('');
   return !!(match && regexp.lastIndex === 0);
 }
 
@@ -277,10 +257,10 @@ export function regExpContainsBackreference(regexpValue: string): boolean {
 
 export function regExpFlags(regexp: RegExp): string {
   return (
-    (regexp.global ? "g" : "") +
-    (regexp.ignoreCase ? "i" : "") +
-    (regexp.multiline ? "m" : "") +
-    ((regexp as any).unicode ? "u" : "")
+    (regexp.global ? 'g' : '') +
+    (regexp.ignoreCase ? 'i' : '') +
+    (regexp.multiline ? 'm' : '') +
+    ((regexp as any).unicode ? 'u' : '')
   );
 }
 
@@ -302,11 +282,7 @@ export function firstNonWhitespaceIndex(str: string): number {
  * Returns the leading whitespace of the string.
  * If the string contains only whitespaces, returns entire string
  */
-export function getLeadingWhitespace(
-  str: string,
-  start: number = 0,
-  end: number = str.length
-): string {
+export function getLeadingWhitespace(str: string, start: number = 0, end: number = str.length): string {
   for (let i = start; i < end; i++) {
     const chCode = str.charCodeAt(i);
     if (chCode !== CharCode.Space && chCode !== CharCode.Tab) {
@@ -320,10 +296,7 @@ export function getLeadingWhitespace(
  * Returns last index of the string that is not whitespace.
  * If string is empty or contains only whitespaces, returns -1
  */
-export function lastNonWhitespaceIndex(
-  str: string,
-  startIndex: number = str.length - 1
-): number {
+export function lastNonWhitespaceIndex(str: string, startIndex: number = str.length - 1): number {
   for (let i = startIndex; i >= 0; i--) {
     const chCode = str.charCodeAt(i);
     if (chCode !== CharCode.Space && chCode !== CharCode.Tab) {
@@ -408,7 +381,7 @@ export function equalsIgnoreCase(a: string, b: string): boolean {
 }
 
 function doEqualsIgnoreCase(a: string, b: string, stopAt = a.length): boolean {
-  if (typeof a !== "string" || typeof b !== "string") {
+  if (typeof a !== 'string' || typeof b !== 'string') {
     return false;
   }
 
@@ -430,10 +403,7 @@ function doEqualsIgnoreCase(a: string, b: string, stopAt = a.length): boolean {
 
     // Any other charcode
     else {
-      if (
-        String.fromCharCode(codeA).toLowerCase() !==
-        String.fromCharCode(codeB).toLowerCase()
-      ) {
+      if (String.fromCharCode(codeA).toLowerCase() !== String.fromCharCode(codeB).toLowerCase()) {
         return false;
       }
     }
@@ -452,7 +422,7 @@ export function startsWithIgnoreCase(str: string, candidate: string): boolean {
 }
 
 /**
- * @returns the length of the common prefix of the two strings.
+ * @return the length of the common prefix of the two strings.
  */
 export function commonPrefixLength(a: string, b: string): number {
   let i: number,
@@ -468,7 +438,7 @@ export function commonPrefixLength(a: string, b: string): number {
 }
 
 /**
- * @returns the length of the common suffix of the two strings.
+ * @return the length of the common suffix of the two strings.
  */
 export function commonSuffixLength(a: string, b: string): number {
   let i: number,
@@ -486,14 +456,7 @@ export function commonSuffixLength(a: string, b: string): number {
   return len;
 }
 
-function substrEquals(
-  a: string,
-  aStart: number,
-  aEnd: number,
-  b: string,
-  bStart: number,
-  bEnd: number
-): boolean {
+function substrEquals(a: string, aStart: number, aEnd: number, b: string, bStart: number, bEnd: number): boolean {
   while (aStart < aEnd && bStart < bEnd) {
     if (a[aStart] !== b[bStart]) {
       return false;
@@ -669,16 +632,16 @@ const COLOR_END = /\x1b\[0?m/g; // Color
 
 export function removeAnsiEscapeCodes(str: string): string {
   if (str) {
-    str = str.replace(EL, "");
-    str = str.replace(COLOR_START, "");
-    str = str.replace(COLOR_END, "");
+    str = str.replace(EL, '');
+    str = str.replace(COLOR_START, '');
+    str = str.replace(COLOR_END, '');
   }
 
   return str;
 }
 
 export const removeAccents: (str: string) => string = (function() {
-  if (typeof (String.prototype as any).normalize !== "function") {
+  if (typeof (String.prototype as any).normalize !== 'function') {
     // ☹️ no ES6 features...
     return function(str: string) {
       return str;
@@ -688,7 +651,7 @@ export const removeAccents: (str: string) => string = (function() {
     // see: https://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript/37511463#37511463
     const regex = /[\u0300-\u036f]/g;
     return function(str: string) {
-      return (str as any).normalize("NFD").replace(regex, empty);
+      return (str as any).normalize('NFD').replace(regex, empty);
     };
   }
 })();
@@ -710,7 +673,7 @@ export function safeBtoa(str: string): string {
 }
 
 export function repeat(s: string, count: number): string {
-  let result = "";
+  let result = '';
   for (let i = 0; i < count; i++) {
     result += s;
   }
@@ -749,16 +712,13 @@ export function fuzzyContains(target: string, query: string): boolean {
   return true;
 }
 
-export function containsUppercaseCharacter(
-  target: string,
-  ignoreEscapedChars = false
-): boolean {
+export function containsUppercaseCharacter(target: string, ignoreEscapedChars = false): boolean {
   if (!target) {
     return false;
   }
 
   if (ignoreEscapedChars) {
-    target = target.replace(/\\./g, "");
+    target = target.replace(/\\./g, '');
   }
 
   return target.toLowerCase() !== target;
@@ -770,12 +730,12 @@ export function uppercaseFirstLetter(str: string): string {
 
 export function getNLines(str: string, n = 1): string {
   if (n === 0) {
-    return "";
+    return '';
   }
 
   let idx = -1;
   do {
-    idx = str.indexOf("\n", idx + 1);
+    idx = str.indexOf('\n', idx + 1);
     n--;
   } while (n > 0 && idx >= 0);
 

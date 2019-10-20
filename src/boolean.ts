@@ -1,8 +1,7 @@
 /** Boolean methods */
 
 /** Ternary operator. Returns f or g, based on condition */
-export const either = (f: any, g: any, condition: boolean): any =>
-  condition ? f : g;
+export const either = (f: any, g: any, condition: boolean): any => (condition ? f : g);
 
 /** Returns true if none of the conditions are true */
 export const none2 = (a: boolean, b: boolean): boolean => !a && !b;

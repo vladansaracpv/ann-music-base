@@ -1,31 +1,35 @@
 /** Functional Programming */
 
-export const curry = (fn: any) =>
-  (function curried(this: any, cargs: any) {
-    return cargs.length >= fn.length
-      ? fn.apply(this, cargs)
-      : (...args: any) => curried([...cargs, ...args]);
-  })([]);
+export const curry = (fn: Function) => {
+  function curried(cargs: any[]) {
+    return cargs.length >= fn.length ? fn.apply(this, cargs) : (...args: any[]) => curried([...cargs, ...args]);
+  }
 
-export const partial = (fn: any, ...first: any) => (...rest: any) =>
-  fn(...first, ...rest);
+  return curried([]);
+};
 
-export const compose2 = (f: any, g: any) => (...args: any) => f(g(...args));
-export const compose = (...fns: any) => fns.reduce(compose2);
-export const pipe = (...fns: any) => fns.reduceRight(compose2);
+export const partial = (fn: Function, ...head) => (...tail) => fn(...head, ...tail);
 
-export const pipeDebug = (...fns: any) => (value: any) => {
+/** Compose functions */
+export const compose2 = (f: Function, g: Function) => (...args: any[]) => f(g(...args));
+export const compose = (...fns: Function[]) => fns.reduce(compose2);
+
+/** Pipe functions */
+export const pipe = (...fns: Function[]) => fns.reduceRight(compose2);
+export const pipeDebug = (...fns: Function[]) => (value: any) => {
   debugger;
-  return fns.reduce((currentValue: any, currentFunction: any) => {
+  return fns.reduce((currentValue, currentFunction) => {
     debugger;
     return currentFunction(currentValue);
   }, value);
 };
 
+/** Trace function */
 export const trace = (label: string) => (value: any) => {
   console.log(`${label}: ${value}`);
   return value;
 };
 
-export const map = (fn: any) => (mappable: any) => mappable.map(fn);
-export const log = (...args: any) => console.log(...args);
+/** Mapping functions */
+type FunctionMap = (currentValue: any, index?: any, array?: any[]) => any[];
+export const map = (fn: FunctionMap) => (mappable: any[]) => mappable.map(fn);
