@@ -15,7 +15,7 @@ export const len = (str: string) => str.length;
  * @param regex {RegExp}
  * @return {<string>[]} || null
  */
-export const tokenize = (str: string, regex: string | RegExp) => (str.match(regex) ? str.match(regex)['groups'] : null);
+export const tokenize = (str: string, regex: string | RegExp) => (str.match(regex) ? str.match(regex).groups : null);
 
 export const capitalize = (l: string) => l[0].toUpperCase(); // l.charAt(0).toUpperCase() + l.slice(1);
 
@@ -44,7 +44,7 @@ export function pad(n: number, l: number, char: string = '0'): string {
   return r.reverse().join('');
 }
 
-const _formatRegexp = /{(\d+)}/g;
+const formatRegexp = /{(\d+)}/g;
 
 /**
  * Helper to produce a string with a variable number of arguments. Insert variable segments
@@ -56,7 +56,7 @@ export function format(value: string, ...args: any[]): string {
   if (args.length === 0) {
     return value;
   }
-  return value.replace(_formatRegexp, function(match, group) {
+  return value.replace(formatRegexp, (match, group) => {
     const idx = parseInt(group, 10);
     return isNaN(idx) || idx < 0 || idx >= args.length ? match : args[idx];
   });
@@ -67,7 +67,7 @@ export function format(value: string, ...args: any[]): string {
  * being used e.g. in HTMLElement.innerHTML.
  */
 export function escape(html: string): string {
-  return html.replace(/[<>&]/g, function(match) {
+  return html.replace(/[<>&]/g, (match) => {
     switch (match) {
       case '<':
         return '&lt;';
@@ -131,15 +131,15 @@ export function rtrim(haystack: string, needle: string): string {
     return haystack;
   }
 
-  const needleLen = needle.length,
-    haystackLen = haystack.length;
+  const needleLen = needle.length;
+  const haystackLen = haystack.length;
 
   if (needleLen === 0 || haystackLen === 0) {
     return haystack;
   }
 
-  let offset = haystackLen,
-    idx = -1;
+  let offset = haystackLen;
+  let idx = -1;
 
   while (true) {
     idx = haystack.lastIndexOf(needle, offset - 1);
@@ -269,7 +269,7 @@ export function regExpFlags(regexp: RegExp): string {
  * If string is empty or contains only whitespaces, returns -1
  */
 export function firstNonWhitespaceIndex(str: string): number {
-  for (let i = 0, len = str.length; i < len; i++) {
+  for (let i = 0, l = str.length; i < l; i++) {
     const chCode = str.charCodeAt(i);
     if (chCode !== CharCode.Space && chCode !== CharCode.Tab) {
       return i;
@@ -317,8 +317,8 @@ export function compare(a: string, b: string): number {
 }
 
 export function compareIgnoreCase(a: string, b: string): number {
-  const len = Math.min(a.length, b.length);
-  for (let i = 0; i < len; i++) {
+  const l = Math.min(a.length, b.length);
+  for (let i = 0; i < l; i++) {
     let codeA = a.charCodeAt(i);
     let codeB = b.charCodeAt(i);
 
@@ -425,35 +425,35 @@ export function startsWithIgnoreCase(str: string, candidate: string): boolean {
  * @return the length of the common prefix of the two strings.
  */
 export function commonPrefixLength(a: string, b: string): number {
-  let i: number,
-    len = Math.min(a.length, b.length);
+  let i: number;
+  const l = Math.min(a.length, b.length);
 
-  for (i = 0; i < len; i++) {
+  for (i = 0; i < l; i++) {
     if (a.charCodeAt(i) !== b.charCodeAt(i)) {
       return i;
     }
   }
 
-  return len;
+  return l;
 }
 
 /**
  * @return the length of the common suffix of the two strings.
  */
 export function commonSuffixLength(a: string, b: string): number {
-  let i: number,
-    len = Math.min(a.length, b.length);
+  let i: number;
+  const l = Math.min(a.length, b.length);
 
   const aLastIndex = a.length - 1;
   const bLastIndex = b.length - 1;
 
-  for (i = 0; i < len; i++) {
+  for (i = 0; i < l; i++) {
     if (a.charCodeAt(aLastIndex - i) !== b.charCodeAt(bLastIndex - i)) {
       return i;
     }
   }
 
-  return len;
+  return l;
 }
 
 function substrEquals(a: string, aStart: number, aEnd: number, b: string, bStart: number, bEnd: number): boolean {
@@ -493,21 +493,7 @@ export function overlap(a: string, b: string): number {
   return 0;
 }
 
-// --- unicode
-// http://en.wikipedia.org/wiki/Surrogate_pair
-// Returns the code point starting at a specified index in a string
-// Code points U+0000 to U+D7FF and U+E000 to U+FFFF are represented on a single character
-// Code points U+10000 to U+10FFFF are represented on two consecutive characters
-//export function getUnicodePoint(str:string, index:number, len:number):number {
-//	const chrCode = str.charCodeAt(index);
-//	if (0xD800 <= chrCode && chrCode <= 0xDBFF && index + 1 < len) {
-//		const nextChrCode = str.charCodeAt(index + 1);
-//		if (0xDC00 <= nextChrCode && nextChrCode <= 0xDFFF) {
-//			return (chrCode - 0xD800) << 10 + (nextChrCode - 0xDC00) + 0x10000;
-//		}
-//	}
-//	return chrCode;
-//}
+
 export function isHighSurrogate(charCode: number): boolean {
   return 0xd800 <= charCode && charCode <= 0xdbff;
 }
@@ -546,7 +532,7 @@ export function isBasicASCII(str: string): boolean {
 }
 
 export function containsFullWidthCharacter(str: string): boolean {
-  for (let i = 0, len = str.length; i < len; i++) {
+  for (let i = 0, l = str.length; i < l; i++) {
     if (isFullWidthCharacter(str.charCodeAt(i))) {
       return true;
     }
@@ -640,17 +626,17 @@ export function removeAnsiEscapeCodes(str: string): string {
   return str;
 }
 
-export const removeAccents: (str: string) => string = (function() {
+export const removeAccents: (str: string) => string = (() => {
   if (typeof (String.prototype as any).normalize !== 'function') {
     // ☹️ no ES6 features...
-    return function(str: string) {
+    return (str: string) => {
       return str;
     };
   } else {
     // transform into NFD form and remove accents
     // see: https://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript/37511463#37511463
     const regex = /[\u0300-\u036f]/g;
-    return function(str: string) {
+    return (str: string) => {
       return (str as any).normalize('NFD').replace(regex, empty);
     };
   }

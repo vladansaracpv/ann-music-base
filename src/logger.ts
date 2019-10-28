@@ -48,7 +48,6 @@ export enum LogLevel {
 export type LogOutput = (source: string | undefined, level: LogLevel, ...objects: any[]) => void;
 
 export class Logger {
-  source: string;
   /**
    * Current logging level.
    * Set it to LogLevel.Off to disable logs completely.
@@ -67,6 +66,9 @@ export class Logger {
   static enableProductionMode() {
     Logger.level = LogLevel.Warning;
   }
+
+  source: string;
+
 
   constructor(source?: string) {
     this.source = source;

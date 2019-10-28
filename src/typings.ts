@@ -1,19 +1,3 @@
-/**
- 
- isNumber
- isInteger
- isString
- isUndefined
- isUndefinedOrNull
- isArray
- isStringArray
- isObject
- isBoolean
- isEmptyObject
- isFunction
- 
- */
-
 enum type {
   number = 'number',
   string = 'string',
@@ -86,8 +70,7 @@ export function isStringArray(value: any): value is string[] {
 
 /**
  *
- * @return whether the provided parameter is of type `object` but **not**
- *	`null`, an `array`, a `regexp`, nor a `date`.
+ * @return whether the provided parameter is of type `object` but **not**	`null`, an `array`, a `regexp`, nor a `date`.
  */
 export function isObject(obj: any): obj is Record<string, any> {
   // The method can't do a type cast since there are type (like strings) which
@@ -119,7 +102,7 @@ export function isEmptyObject(obj: any): obj is any {
     return false;
   }
 
-  for (let key in obj) {
+  for (const key in obj) {
     if (hasOwnProperty.call(obj, key)) {
       return false;
     }
