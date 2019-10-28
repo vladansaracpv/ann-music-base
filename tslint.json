@@ -5,6 +5,7 @@
     "no-console": false,
     "ordered-imports": false,
     "curly": false,
-    "no-bitwise": false
+    "no-bitwise": false,
+    "interface-name": false
   }
 }
