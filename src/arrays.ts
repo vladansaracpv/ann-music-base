@@ -1,9 +1,8 @@
 // /** Array methods */
 import { eq, neq, lt } from './relations';
 import { add, sub, abs } from './math';
-import { either } from './boolean';
+import { either, some } from './boolean';
 import { isInteger, isUndefinedOrNull } from './typings';
-import { or } from './logical';
 
 export const fillStr = (s: string, n: number) => Array(Math.abs(n) + 1).join(s);
 
@@ -40,7 +39,7 @@ const rangeDown = (start: number, l: number): number[] => {
 };
 
 export const range = (a: number, b: number): number[] => {
-  if (or(!isInteger(a), !isInteger(b))) return [];
+  if (some(!isInteger(a), !isInteger(b))) return [];
 
   return either(rangeUp(a, abs(b - a + 1)), rangeDown(a, abs(a - b + 1)), lt(a, b));
 };
