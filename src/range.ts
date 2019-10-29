@@ -3,10 +3,6 @@ interface RangeType {
   end: number;
 }
 
-interface RangedGroup {
-  range: RangeType;
-  size: number;
-}
 /**
  * Returns the intersection between two ranges as a range itself.
  * Returns `{ start: 0, end: 0 }` if the intersection is empty.
