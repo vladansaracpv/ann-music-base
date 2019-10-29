@@ -1,6 +1,5 @@
 import * as Arrays from './arrays';
 import * as Booleans from './boolean';
-import * as CharCodes from './charCode';
 import * as Errors from './error';
 import * as Functional from './functional';
 import * as Logger from './logger';
@@ -13,7 +12,6 @@ import * as Typings from './typings';
 
 export const BaseArray = Arrays;
 export const BaseBoolean = Booleans;
-export const BaseCharCodes = CharCodes;
 export const BaseErrors = Errors;
 export const BaseFunctional = Functional;
 export const BaseLogger = Logger;
