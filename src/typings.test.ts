@@ -10,7 +10,7 @@ import {
   isBoolean,
   isEmptyObject,
   isFunction
-} from '../typings'
+} from './typings'
 
 describe('** TYPINGS FUNCTIONS **', () => {
   describe("\n - isNumber(obj: any)", () => {

@@ -1,4 +1,4 @@
-import { either, none, allFalse, both, allTrue, some, someTrue } from '../boolean';
+import { either, none, allFalse, both, allTrue, some, someTrue } from './boolean';
 
 describe('** BOOLEAN FUNCTIONS **', () => {
 
