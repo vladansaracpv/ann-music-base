@@ -1,6 +1,6 @@
 // /** Array methods */
 import { eq, neq, lt } from './relations';
-import { add, sub, abs } from './math';
+import { add, sub } from './math';
 import { either, some } from './boolean';
 import { isInteger, isUndefinedOrNull } from './typings';
 
@@ -41,7 +41,7 @@ const rangeDown = (start: number, l: number): number[] => {
 export const range = (a: number, b: number): number[] => {
   if (some(!isInteger(a), !isInteger(b))) return [];
 
-  return either(rangeUp(a, abs(b - a + 1)), rangeDown(a, abs(a - b + 1)), lt(a, b));
+  return either(rangeUp(a, Math.abs(b - a + 1)), rangeDown(a, Math.abs(a - b + 1)), lt(a, b));
 };
 
 export const shuffle = (array: any[], rnd = Math.random) => {

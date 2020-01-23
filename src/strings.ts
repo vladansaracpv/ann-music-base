@@ -3,6 +3,8 @@ import { CharCode } from './charCode';
 
 /** String methods */
 
+export const head = (s: string) => s[0];
+
 export const rest = (x: string, n = 1) => x.substring(n);
 
 export const glue = (...args) => args.reduce((acc, el) => acc + el);
