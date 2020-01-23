@@ -69,7 +69,6 @@ export class Logger {
 
   source: string;
 
-
   constructor(source?: string) {
     this.source = source;
   }

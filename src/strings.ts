@@ -69,7 +69,7 @@ export function format(value: string, ...args: any[]): string {
  * being used e.g. in HTMLElement.innerHTML.
  */
 export function escape(html: string): string {
-  return html.replace(/[<>&]/g, (match) => {
+  return html.replace(/[<>&]/g, match => {
     switch (match) {
       case '<':
         return '&lt;';
@@ -494,7 +494,6 @@ export function overlap(a: string, b: string): number {
   }
   return 0;
 }
-
 
 export function isHighSurrogate(charCode: number): boolean {
   return 0xd800 <= charCode && charCode <= 0xdbff;

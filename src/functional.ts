@@ -17,7 +17,6 @@ export const compose = (...fns: Function[]) => fns.reduce(compose2);
 /** Pipe functions */
 export const pipe = (...fns: Function[]) => fns.reduceRight(compose2);
 
-
 /** Trace function */
 export const trace = (label: string) => (value: any) => {
   console.log(`${label}: ${value}`);
